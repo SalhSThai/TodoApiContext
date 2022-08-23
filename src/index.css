@@ -9,3 +9,10 @@ body {
 .callout-success {
   border-left: 0.25rem solid rgba(25, 135, 84, 0.8);
 }
+
+.scroll-disable::-webkit-scrollbar{
+  display: none;
+}
+.scroll-disable{
+  overflow: scroll;
+}
