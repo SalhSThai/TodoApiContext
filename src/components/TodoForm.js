@@ -2,38 +2,22 @@ import { useState } from "react";
 import axios from "axios";
 
 function TodoForm(props) {
-  const { fetchTodo, mode,item,setEdit } = props;
-  const [title, setTitle] = useState('')
+  const { fetchTodo,  onSubmit ,onCancle ,initailValue} = props;
+  const [title, setTitle] = useState(initailValue||'')
 
-  const onSubmit = async e => {
+  const handleSubmitForm =  e => {
     e.preventDefault();
-    if (!mode) {
-      try {
-        const res = await axios.post("http://localhost:8080/todos", { title, completed: false });
-        console.log(res.data);
-        fetchTodo();
-        setTitle('');
-      } catch (err) { console.log(err); }
-    }
-    else {
-      try {
-        const res = await axios.put(`http://localhost:8080/todos/${item.id}` ,{ title, completed: item.completed });
-        console.log(res.data);
-        fetchTodo();
-        setTitle('');
-        setEdit(false);
-      } catch (err) { console.log(err); }
-
-    }
-  }
-
-  const onReset = function (e) {
-    console.log(e.target);
+    onSubmit(title)
     setTitle('');
-    setEdit(false);
-  }
+    }
+  
 
-  return (<form onSubmit={onSubmit}>
+    const handleClickCancle = function (e) {
+      setTitle('');
+      props.onCancle?.();
+    }
+
+  return (<form onSubmit={handleSubmitForm}>
     <div className="input-group">
       <input
         type="text"
@@ -45,7 +29,7 @@ function TodoForm(props) {
       </button>
       <button type="button"
         className="btn btn-outline-secondary"
-        onClick={onReset}>
+        onClick={handleClickCancle}>
         <i className="fa-solid fa-xmark" />
       </button>
     </div>

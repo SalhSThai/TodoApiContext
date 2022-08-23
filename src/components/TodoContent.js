@@ -22,10 +22,26 @@ function TodoContent(props) {
             console.log(err);
         }
     }
+    const handleSubmit = async (title)=>{
+        try {
+            const res = await axios.put(`http://localhost:8080/todos/${id}`, { title, completed });
+            fetchTodo();
+            setEdit(false);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const onCancle = function (e) {
+        setEdit(false);
+      }
 
 
     return <>
-        {edit ? <TodoForm mode={edit} item={props.todo} fetchTodo={fetchTodo} setEdit={setEdit} /> :
+        {edit ? <TodoForm 
+        onSubmit={handleSubmit}
+        onCancle={onCancle}
+        initailValue={title}/> :
             <div className="d-flex align-items-center">
                 <span className="flex-fill" role="button" onClick={() => setEdit(true)}>
                     {title}

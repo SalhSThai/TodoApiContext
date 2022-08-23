@@ -7,36 +7,36 @@ function App() {
   const [todos, setTodos] = useState([]);
 
 
-const fetchTodo = async ()=>{
-  try {
-    const res = await axios.get('http://localhost:8080/todos');
-    setTodos(res.data.todos);
-  } catch (err) {
-    console.log(err);
-  }
-};
+  const fetchTodo = async () => {
+    try {
+      const res = await axios.get('http://localhost:8080/todos');
+      setTodos(res.data.todos);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-// =============================================== function ZONE=================
-const changeTitle = (title)=>{}
+  // =============================================== function ZONE=================
+
   useEffect(() => {
-    // axios.get('http://localhost:8080/todos')
-    //   .then(res => {
-    //     console.log(res.data);
-    //     setTodos(res.data.todos)
-    //   })
-    //   .catch(err => console.log(err))
-    // return () => { };
     fetchTodo();
   }, [])
+
+  const handleSubmitForm = async (title) => {
+    try {
+      const res = await axios.post("http://localhost:8080/todos", { title, completed: false });
+      fetchTodo();
+    } catch (err) { console.log(err); }
+  }
 
 
 
   return (
     <div className="container mt-5 mb-3" style={{ maxWidth: 576 }}>
       <div className="my-4">
-        <TodoForm fetchTodo={fetchTodo}/>
+        <TodoForm fetchTodo={fetchTodo} onSubmit={handleSubmitForm} />
       </div>
-      <TodoContainer todos={todos} fetchTodo={fetchTodo}/>
+      <TodoContainer todos={todos} fetchTodo={fetchTodo} />
     </div>
   );
 }
