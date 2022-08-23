@@ -1,23 +1,26 @@
 import TodoForm from "./components/TodoForm";
 import TodoContainer from "./components/TodoContainer";
-import TodoList from "./components/TodoList";
-import Pagination from "./components/Pagination";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [todos,setTodos] = useState([]);
+  console.log("APP");
+  useEffect(()=>{
+axios.get('http://localhost:8080/todos')
+.then(res => {console.log(res.data);
+setTodos(res.data.todos)})
+.catch(err=>console.log(err))
+    return ()=>{};
+  },[])
   return (
     <div className="container mt-5 mb-3" style={{ maxWidth: 576 }}>
       <div className="my-4">
         <TodoForm />
       </div>
       <TodoContainer />
-      <TodoList />
-      <div className="my-2 d-flex justify-content-between align-item-center">
-        <small className="text-muted ">Showing 6 to 10 of 12 entries</small>
-        <Pagination />
-
-      </div>
     </div>
   );
-}
+} 
 
 export default App;
