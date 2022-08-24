@@ -8,10 +8,11 @@ function Sort(props) {
             <select
                 className="form-select form-select-sm"
                 style={{ width: '8rem' }}
-                onChange={(event) => isSort(event.target.value)  }   
+                onChange={(event) => isSort(event.target.value)}
             >
-                <option>Title: A-Z</option>
-                <option>Title: Z-A</option>
+                <option value="">Sort</option>
+                <option value="title">Title: A-Z</option>
+                <option value="-title">Title: Z-A</option>
             </select>
         </div>
 

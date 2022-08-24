@@ -8,21 +8,27 @@ import Pagination from "./Pagination";
 import { useEffect, useState } from "react";
 
 function TodoContainer(props) {
-    const { searchTodos } = props;
-    const [sort, setSort] = useState(true);
+    const { searchTodos, total,trigger } = props;
+    const [sort, setSort] = useState('');
     const [value, setValue] = useState('');
     const [isCompelete, setIsCompelete] = useState('');
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [limit, setLimit] = useState('5');
     const onClear = () => setValue('');
 
-    
+
     useEffect(() => {
         const id = setTimeout(() => {
-            searchTodos(value, isCompelete, sort); 
+            searchTodos(value, isCompelete, sort, currentPage, limit);
         }, 1000);
-        return  () => clearTimeout(id);
-    },[value,isCompelete,sort]);
+        return () => clearTimeout(id);
+    }, [value, isCompelete, sort, currentPage, limit]);
+    useEffect(()=>{
+        searchTodos('','','',1,5)
+    },[trigger])
 
-    const isSort = (value) => { value === "Title: A-Z" ? setSort(true) : setSort(false) };
+    const isSort = (value) => setSort(value);
     const checkComplete = (e) => {
         switch (e) {
             case "completed": setIsCompelete(true); break;
@@ -35,17 +41,17 @@ function TodoContainer(props) {
     return (
         <>
             <div className="my-2 d-flex gap-3">
-                <SearchText onChange={onChange} value={value} onClear={onClear}  />
+                <SearchText onChange={onChange} value={value} onClear={onClear} />
                 <SearchStatus searchTodos={props.searchTodos} checkComplete={checkComplete} isSort={isSort} />
             </div>
             <div className="my-2 d-flex justify-content-between">
-                <PageLimit />
+                <PageLimit chageLimit={e => { setLimit(e); setCurrentPage(1) }} value={limit} />
                 <Sort isSort={isSort} />
             </div>
             <TodoList todos={props.todos} fetchTodo={props.fetchTodo} />
             <div className="my-2 d-flex justify-content-between align-item-center">
-                <small className="text-muted ">Showing 6 to 10 of 12 entries</small>
-                <Pagination />
+                <small className="text-muted ">Showing {(currentPage - 1) * limit + 1} to {+currentPage === Math.ceil(total / limit) ? total : currentPage * limit}  of {total} entries</small>
+                <Pagination changePage={e => setCurrentPage(e)} noPage={Math.ceil(total / limit)} currentPage={currentPage} />
 
             </div>
 
