@@ -1,8 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 
 function TodoForm(props) {
-  const { fetchTodo,  onSubmit ,onCancle ,initailValue} = props;
+  const {  onSubmit ,initailValue} = props;
   const [title, setTitle] = useState(initailValue||'')
 
   const handleSubmitForm =  e => {

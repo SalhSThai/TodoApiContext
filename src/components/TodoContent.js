@@ -8,7 +8,7 @@ function TodoContent(props) {
 
     const handleClickDelete = async () => {
         try {
-            const res = await axios.delete('http://localhost:8080/todos/' + id);
+            await axios.delete('http://localhost:8080/todos/' + id);
             fetchTodo();
         } catch (err) {
             console.log(err);
@@ -16,7 +16,7 @@ function TodoContent(props) {
     }
     const setComplete = async () => {
         try {
-            const res = await axios.put(`http://localhost:8080/todos/${id}`, { title, completed: !completed });
+             await axios.put(`http://localhost:8080/todos/${id}`, { title, completed: !completed });
             fetchTodo();
         } catch (err) {
             console.log(err);
@@ -24,7 +24,7 @@ function TodoContent(props) {
     }
     const handleSubmit = async (title)=>{
         try {
-            const res = await axios.put(`http://localhost:8080/todos/${id}`, { title, completed });
+            await axios.put(`http://localhost:8080/todos/${id}`, { title, completed });
             fetchTodo();
             setEdit(false);
         } catch (err) {

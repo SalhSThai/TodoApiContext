@@ -1,4 +1,8 @@
-function SearchStatus() {
+function SearchStatus(props) {
+const {checkComplete} = props;
+
+
+
     return (<>
         <div className="btn-group">
             <input
@@ -6,6 +10,7 @@ function SearchStatus() {
                 className="btn-check"
                 name="status"
                 id="all"
+                onClick={(e)=>checkComplete(e.target.value)}
                 defaultChecked
             />
             <label className="btn btn-outline-secondary" htmlFor="all">
@@ -17,6 +22,7 @@ function SearchStatus() {
                 name="status"
                 value="completed"
                 id="completed"
+                onClick={(e)=>checkComplete(e.target.value)}
             />
             <label className="btn btn-outline-secondary" htmlFor="completed">
                 <i className="fa-solid fa-clipboard-check" />
@@ -27,6 +33,7 @@ function SearchStatus() {
                 name="status"
                 value="pending"
                 id="pending"
+                onClick={(e)=>checkComplete(e.target.value)}
             />
             <label className="btn btn-outline-secondary" htmlFor="pending">
                 <i className="fa-regular fa-clipboard" />
