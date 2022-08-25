@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DELETE_TODO, LOAD_TODO } from "../actions/todoAction";
+import { CREATE_TODO, DELETE_TODO, LOAD_TODO } from "../actions/todoAction";
 import TodoItem from "../components/TodoItem";
 
 const initialTodoState = {
@@ -26,6 +26,10 @@ function todoReducer(state, action) {
             const todo = todos.filter((item) => item.id != payload.id)
             return {...state,todos:todo}
         }
+        case CREATE_TODO: {
+            return {...state,todos:[payload.todo,...state.todos]}
+        }
+
         default:
             return state;
     }
